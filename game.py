@@ -16,6 +16,17 @@ class Player:
   def show_details(self):
     return f"Name: {self.get_name()}\nLife: {self.get_life()}\nLevel: {self.get_level()}"
 
+  def attack(self, target):
+    damage = self.__level * 2
+    target.being_attacked(damage)
+    print(f"{self.get_name()} attacks {target.get_name()} for {damage} damage.")
+
+  def being_attacked(self, damage):
+    self.__life -= damage
+
+    if self.__life < 0:
+      self.__life = 0
+
 class Hero(Player): 
   def __init__(self, name, life, level, skill):
     super().__init__(name, life, level)
@@ -40,8 +51,8 @@ class Enemy(Player):
 
 class Game: 
   def __init__(self) -> None:
-    self.hero = Hero(name="Biro", life=100, level=1, skill="Cry")
-    self.enemy = Enemy(name="Leo", life=100, level=1, type="Flyer")
+    self.hero = Hero(name="Biro", life=100, level=50, skill="Cry")
+    self.enemy = Enemy(name="Leo", life=100, level=5, type="Flyer")
 
   def start_batle(self): 
     print("Starting batle... ⚔️")
@@ -53,6 +64,16 @@ class Game:
 
       input("Press Enter to attack... 🔥")  
       choice = input("Choose (1 - Normal Attack, 2 - Super Attack): ")
+
+      if choice == "1":
+        self.hero.attack(self.enemy)
+      else:
+        print("Invalid choice. Try again... ")
+      
+    if self.hero.get_life() > 0:
+      print(f"{self.hero.get_name()} won the battle! 🎉")
+    else:
+      print(f"{self.hero.get_name()} just lost! ☠️")
 
 game = Game()
 game.start_batle()
