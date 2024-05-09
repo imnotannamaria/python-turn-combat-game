@@ -38,6 +38,11 @@ class Hero(Player):
   def show_details(self):
     return f"{super().show_details()}\n Skill: {self.get_skill()}\n"
 
+  def special_attack(self, target):
+    damage = self.get_level() * 5
+    target.being_attacked(damage)
+    print(f"{self.get_name()} used the special skill {self.get_skill()} in {target.get_name()} for {damage} damage.")
+
 class Enemy(Player): 
   def __init__(self, name, life, level, type):
     super().__init__(name, life, level)
@@ -67,6 +72,8 @@ class Game:
 
       if choice == "1":
         self.hero.attack(self.enemy)
+      elif choice == "2":
+        self.hero.special_attack(self.enemy)
       else:
         print("Invalid choice. Try again... ")
       
