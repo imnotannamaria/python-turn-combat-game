@@ -56,8 +56,8 @@ class Enemy(Player):
 
 class Game: 
   def __init__(self) -> None:
-    self.hero = Hero(name="Biro", life=100, level=50, skill="Cry")
-    self.enemy = Enemy(name="Leo", life=100, level=5, type="Flyer")
+    self.hero = Hero(name="Cheryl", life=100, level=5, skill="Fire Ball")
+    self.enemy = Enemy(name="Mormom", life=80, level=5, type="Flyer")
 
   def start_batle(self): 
     print("Starting batle... ⚔️")
@@ -76,6 +76,9 @@ class Game:
         self.hero.special_attack(self.enemy)
       else:
         print("Invalid choice. Try again... ")
+
+      if self.enemy.get_life() > 0:
+        self.enemy.attack(self.hero)
       
     if self.hero.get_life() > 0:
       print(f"{self.hero.get_name()} won the battle! 🎉")
